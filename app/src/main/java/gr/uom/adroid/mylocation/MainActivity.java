@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.internal.LockOnGetVariable;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -32,11 +34,7 @@ public class MainActivity extends AppCompatActivity {
     String[] PERMISSIONS = {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-            Manifest.permission.CONTROL_LOCATION_UPDATES,
-            Manifest.permission.INSTALL_LOCATION_PROVIDER,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.ACCESS_COARSE_LOCATION
     };
     private static final String EMAIL = "email";
 
@@ -46,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        if(!hasPermissions(this, PERMISSIONS)){
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        if(!hasPermissions(MainActivity.this, PERMISSIONS ) ){
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
         }
-
-        loginButton= (LoginButton) findViewById(R.id.login_button);
+        //FACEBOOK LOG IN
+        loginButton=findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList(EMAIL));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -65,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(MainActivity.this, "An error war occured!",
+                Toast.makeText(MainActivity.this, "An error was occured!",
                         Toast.LENGTH_SHORT).show();
             }
         });
 
-        continuebtn = findViewById(R.id.ContinueBTN);;
+        //SIGA MHN BALW KI ALLA SXOLIA
+        continuebtn = findViewById(R.id.ContinueBTN);
         continuebtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(hasPermissions(MainActivity.this, PERMISSIONS ) ){
@@ -83,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             .setMessage("You need to add all the permissions to move further")
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
+
                                 public void onClick(DialogInterface dialog, int which) {
                                     ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
                                 }
@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
-                            })
-                            .create().show();
+                            }).create().show();
                 }
             }
         });
@@ -114,6 +113,4 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    //end of facebook conection.
 }
