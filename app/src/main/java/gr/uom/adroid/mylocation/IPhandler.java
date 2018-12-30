@@ -34,7 +34,7 @@ public class IPhandler extends AsyncTask<Void, Void, Void> {
                 data.append(line);
                 line = bufferedReader.readLine();
             }
-            Log.d("KAPPA", "DATA " + data);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

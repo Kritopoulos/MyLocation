@@ -68,8 +68,8 @@ public class URLconection extends AsyncTask<Void,Void,Void> {
         super.onPostExecute(aVoid);
 
         MainPageActivity mainPageActivity = new MainPageActivity();
-        mainPageActivity.setLAT(lat);
-        mainPageActivity.setLNG(lng);
+        mainPageActivity.setCords(lat,lng);
+
     }
 
 }
