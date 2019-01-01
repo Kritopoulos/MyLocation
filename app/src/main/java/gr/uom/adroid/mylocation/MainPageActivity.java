@@ -18,8 +18,9 @@ public class MainPageActivity extends AppCompatActivity {
     IPhandler ip;
     URLconection urlGetCords;
     private static String ipconection,incomeLNG,incomeLAT;
-    ArrayList <String> locationsArray = new ArrayList<>();
+    String user_id;
     LocationsBD dbLocation;
+    String acceess="false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,11 @@ public class MainPageActivity extends AppCompatActivity {
         nameTXT = findViewById(R.id.nameTXT);
         iptxt = findViewById(R.id.ipTXT);
 
+        Intent intent = getIntent();
+        acceess = intent.getStringExtra("ACCESS");
+        user_id = intent.getStringExtra("ID");
+
+        Log.d("KAPPA", "favoriteLocations on create: "+acceess);
         dbLocation = new LocationsBD(this);
         ip = new IPhandler();
         ip.execute();
@@ -39,13 +45,24 @@ public class MainPageActivity extends AppCompatActivity {
         Log.d("KAPPA", "BUTTON PRESSED");
 
         Intent intent = new Intent(MainPageActivity.this,LocationsActivity.class);
+        intent.putExtra("ACCESS",acceess);
+        intent.putExtra("ID",user_id);
 
+        Log.d("KAPPA", "favBTNid " +user_id);
+        intent.putExtra("ID",user_id);
         startActivity(intent);
     }
 
     public void favoriteLocationsBTN(View v){
-        Intent LocationsIntent = new Intent(MainPageActivity.this, FavoriteLocationsActivity.class);
-        startActivity(LocationsIntent);
+
+        if(acceess.equals("true")) {
+            Intent LocationsIntent = new Intent(MainPageActivity.this, FavoriteLocationsActivity.class);
+            LocationsIntent.putExtra("ID",user_id);
+            startActivity(LocationsIntent);
+        }
+        else {
+            Toast.makeText(MainPageActivity.this, "YOU NEED TO CONECT WITH EMAIL",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void getLocationBTN(View v){
@@ -57,8 +74,7 @@ public class MainPageActivity extends AppCompatActivity {
         //NEED TO GIVE A NAME TO LOCATION.
 
         String incomeName = nameTXT.getText().toString();
-
-        boolean check = false;
+        boolean checkForGabsInName = false;
         int spaceCount = 0;
         for (char c : incomeName.toCharArray()) {
             if (c == ' ') {
@@ -66,17 +82,16 @@ public class MainPageActivity extends AppCompatActivity {
             }
         }
         if(spaceCount == 0){
-            check =true;
+            checkForGabsInName =true;
         }
-
-        if(check) {
+        if(checkForGabsInName) {
             if(incomeLAT == null || incomeLNG == null){
                 Toast.makeText(MainPageActivity.this,"Plaese press the button to get cords",Toast.LENGTH_SHORT).show();
             }
             else {
                 boolean isInserted = dbLocation.insertData(incomeName, incomeLAT.toString(), incomeLNG.toString());
 
-                if (isInserted == true) {
+                if (isInserted == true){
                     Toast.makeText(MainPageActivity.this, "Succesfully saved", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainPageActivity.this, "Save failed", Toast.LENGTH_SHORT).show();
@@ -97,17 +112,6 @@ public class MainPageActivity extends AppCompatActivity {
         incomeLAT = aLat;
         incomeLNG = aLng;
         cordsTXT.setText("Latitude: " +aLat+"\nLongitude: "+aLng);
-    }
-    public  void setName(){
-        nameTXT.getText();
-    }
-
-
-    public void deleteDataFromDb(String id){
-        Log.d("KAPPA", "deleteDataFromDb: " +id);
-        dbLocation.deleteData(id);
-
-
     }
 
 }

@@ -10,8 +10,8 @@
         android:id="@+id/dataTXT"
         android:layout_width="0dp"
         android:layout_height="74dp"
-        android:text="TextView"
-        android:textSize="24sp"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

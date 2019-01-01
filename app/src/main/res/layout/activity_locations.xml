@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LocationsActivity">
 
-    <Button
-        android:id="@+id/Save"
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:onClick="openDATA"
-        android:text="Open location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/dataLIST"
@@ -22,16 +14,36 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Save" />
+        app:layout_constraintTop_toBottomOf="@+id/addToFavBTN" />
+
+    <Button
+        android:id="@+id/open"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:onClick="openDATA"
+        android:text="Open location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="187dp"
+        android:layout_width="117dp"
         android:layout_height="wrap_content"
         android:onClick="deleteDATA"
         android:text="Delete location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Save"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addToFavBTN"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="addToFavBTN"
+        android:text="ADD TO FAVORITE"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/open"
         app:layout_constraintTop_toTopOf="parent" />
 
 

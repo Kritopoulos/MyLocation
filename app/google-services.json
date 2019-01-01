@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "279911815240",
-    "firebase_url": "https://mylocation-38376.firebaseio.com",
-    "project_id": "mylocation-38376",
-    "storage_bucket": "mylocation-38376.appspot.com"
+    "project_number": "1084825886640",
+    "firebase_url": "https://mylocation-226823.firebaseio.com",
+    "project_id": "mylocation-226823",
+    "storage_bucket": "mylocation-226823.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:279911815240:android:7be3f68c5cd0ae0a",
+        "mobilesdk_app_id": "1:1084825886640:android:7be3f68c5cd0ae0a",
         "android_client_info": {
           "package_name": "gr.uom.adroid.mylocation"
         }
       },
       "oauth_client": [
         {
-          "client_id": "279911815240-5fl312arpufmo73un1du0i8i55ni5p26.apps.googleusercontent.com",
+          "client_id": "1084825886640-m5j3j6egv20a6uskipoq91s9aac9f4k3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "gr.uom.adroid.mylocation",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "279911815240-g1l592ap4bc6amt7904jcbqtpj6tha12.apps.googleusercontent.com",
+          "client_id": "1084825886640-vtbvu0hr82crqutoe7mp1et33ah7j0jr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD094KUtDZmD8MeboKMYOs7MOTFl9972ec"
+          "current_key": "AIzaSyBs6i2KD8bIEOjo4O7RWu-s0hW5jCa-yls"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "279911815240-g1l592ap4bc6amt7904jcbqtpj6tha12.apps.googleusercontent.com",
+              "client_id": "1084825886640-vtbvu0hr82crqutoe7mp1et33ah7j0jr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -11,23 +11,32 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 
 public class LocationsActivity extends AppCompatActivity implements Serializable {
 
     ListView dataList;
-    String listID,Lat,Lng;
+    String listID,Lat,Lng,Name;
     ArrayList <String> locationsArray;
     LocationsBD dbLocation;
-
+    String access;
+    String user_id;
+    private FirebaseAuth anAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
+
+        Intent getInfo = getIntent();
+        user_id = getInfo.getStringExtra("ID");
+
+        Log.d("KAPPA", "InLocationsActivity "+user_id);
+        Intent intent = getIntent();
+        access = intent.getStringExtra("ACCESS");
 
         listViewer();
 
@@ -42,8 +51,6 @@ public class LocationsActivity extends AppCompatActivity implements Serializable
         else{
             Toast.makeText(LocationsActivity.this,"IDIOT IDIOT IDIOT",Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     public void openDATA(View v){
@@ -72,8 +79,7 @@ public class LocationsActivity extends AppCompatActivity implements Serializable
         }
         else {
             while (res.moveToNext()) {
-                locationsArray.add("ID: " +res.getString(0) +" NAME: " +res.getString(1) +
-                        "\n||LAT: " + res.getString(2) +", LNG: " + res.getString(3) +"\n");
+                locationsArray.add(res.getString(1) +"\nLAT: " + res.getString(2) +" ,LNG: " + res.getString(3) +"\n\n\n "+res.getString(0));
             }
         }
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.activity_datas,R.id.dataTXT,locationsArray);
@@ -85,9 +91,10 @@ public class LocationsActivity extends AppCompatActivity implements Serializable
                 Object o = dataList.getItemAtPosition(position);
                 String astring=(String)o;
                 String listSTR[] = astring.split(" ");
-                listID = listSTR[1];
-                Lat = listSTR[4];
-                Lng = listSTR[6];
+                listID = listSTR[4];
+                Name = listSTR[0];
+                Lat = listSTR[1];
+                Lng = listSTR[3];
                 Log.d("KAPPA", "\nID: "+listID+"\n" +"Lat: "+Lat + "\nLng: "+ Lng);
 
             }
@@ -95,5 +102,25 @@ public class LocationsActivity extends AppCompatActivity implements Serializable
 
     }
 
+    public void addToFavBTN(View v){
+
+        if(access.equals("true")){
+
+            final FirebaseDatabase locationsOnlineDB = FirebaseDatabase.getInstance();
+            DatabaseReference aref = locationsOnlineDB.getReference("USERS").child(user_id);
+            String post = Name+"Lng "+Lng +"Lat "+Lat +"\n\n\n\n\n " +listID;
+
+            if( listID != null && Lat  != null && Lng != null){
+                aref.child("LOCATIONS").child(listID).setValue(post);
+                Toast.makeText(LocationsActivity.this,"Succesfully added",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(LocationsActivity.this,"Select a location",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(LocationsActivity.this,"You are not conected or the developer sucks.",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
